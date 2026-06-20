@@ -115,10 +115,10 @@ The Power BI dashboard provides:
 
 ---
 
-## 🗄️ 📷 Dashboard Preview
+## 📷 Dashboard Preview
 Overview Dashboard
 
-(Add Screenshot Here)
+[!image](https://github.com/DakshRana1/Ola-Ride-Bookings-Analysis/blob/main/image_2026-06-20_133510966.png?raw=true)
 
 Revenue Dashboard
 
