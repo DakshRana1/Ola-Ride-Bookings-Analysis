@@ -115,31 +115,7 @@ The Power BI dashboard provides:
 
 ---
 
-## 🗄️ Sample SQL Queries
-
-### Successful Bookings
-
-```sql
-SELECT *
-FROM bookings
-WHERE Booking_Status = 'Success';
-Top 5 Customers
-SELECT Customer_ID,
-       COUNT(Booking_ID) AS Total_Rides
-FROM bookings
-GROUP BY Customer_ID
-ORDER BY Total_Rides DESC
-LIMIT 5;
-Average Ride Distance by Vehicle Type
-SELECT Vehicle_Type,
-       AVG(Ride_Distance) AS Avg_Distance
-FROM bookings
-GROUP BY Vehicle_Type;
-Total Revenue
-SELECT SUM(Booking_Value) AS Total_Revenue
-FROM bookings
-WHERE Booking_Status = 'Success';
-📷 Dashboard Preview
+## 🗄️ 📷 Dashboard Preview
 Overview Dashboard
 
 (Add Screenshot Here)
