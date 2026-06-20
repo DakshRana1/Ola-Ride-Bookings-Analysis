@@ -1,118 +1,191 @@
-🚖 Ola Ride Bookings Analysis
-📌 Project Overview
-This repository contains an end-to-end data analysis project focusing on Ola ride booking and cancellation patterns. By analyzing localized ride data over a one-month operational period, this project uncovers actionable insights regarding customer demand, vehicle utilization, revenue distribution, and operational inefficiencies (such as driver/customer cancellation drivers).
+# 🚖 Ola Ride Bookings Analysis
 
-The goal is to assist decision-makers in optimizing driver allocation, reducing cancellation rates, and maximizing weekly booking values.
+## 📌 Project Overview
 
-📂 Repository Structure
-Plaintext
+This project analyzes Ola ride booking data to uncover valuable business insights related to ride demand, booking success rates, cancellations, revenue generation, customer behavior, and vehicle performance.
+
+Using SQL for data analysis and Power BI for visualization, the project transforms raw ride-booking data into actionable insights that can help improve operational efficiency and customer experience.
+
+---
+
+## 🎯 Objectives
+
+- Analyze overall booking trends
+- Identify ride success and cancellation patterns
+- Evaluate revenue performance
+- Study customer booking behavior
+- Compare vehicle category performance
+- Understand payment preferences
+- Generate business recommendations using data
+
+---
+
+## 🛠️ Tech Stack
+
+| Tool | Purpose |
+|--------|---------|
+| SQL | Data Cleaning & Analysis |
+| Power BI | Dashboard Creation |
+| Excel / CSV | Dataset Storage |
+| Git & GitHub | Version Control |
+
+---
+
+## 📂 Project Structure
 
 
 Ola-Ride-Bookings-Analysis/
 │
 ├── Data/
-│   ├── raw_bookings.csv          # Original uncleaned dataset
-│   └── cleaned_bookings.xlsx     # Preprocessed data used for BI dashboards
+│ └── Bookings.csv
 │
 ├── SQL/
-│   ├── database_schema.sql       # Database & table creation scripts
-│   ├── data_cleaning.sql         # SQL validation & constraint checks
-│   └── business_queries.sql      # Core queries addressing KPIs
+│ └── Ola_Analysis.sql
 │
-├── Dashboards/
-│   ├── Ola_Bookings_Analysis.twbx # Tableau Packaged Workbook (if using Tableau)
-│   └── Ola_Bookings_Analysis.pbix # Power BI Dashboard file (if using Power BI)
+├── Dashboard/
+│ └── Ola Dashboard.pbix
 │
-└── README.md                     # Project documentation
-🛠️ Technologies Used
-Excel: Initial data cleaning, structural sanity checks, and schema validation.
-
-SQL (MySQL Workbench): Heavy lifting for exploratory data analysis (EDA), generating summary metrics, and querying business-critical views.
-
-Tableau / Power BI: Interactive dashboard creation to visualize multi-dimensional data models and KPIs.
-
-📊 Dataset & KPI Constraints
-The dataset spans over 100,000 unique booking entries with key fields including Booking ID, Booking Status, Customer ID, Vehicle Type (Auto, Mini, Prime Sedan, SUV, Bike), Pickup/Drop Locations, Cancelled Rides Reason, Customer/Driver Ratings, and Booking Value.
-
-To mimic real-world operational health, the analysis benchmarks the data against the following industry targets:
-
-Booking Success Rate: Kept at a baseline ~62%.
-
-Customer Cancellations: Target capped below 7%.
-
-Driver Cancellations: Target capped below 18%.
-
-Incomplete Rides: Restricted to less than 6%.
-
-🔍 Core Business Questions Answered via SQL
-The SQL/business_queries.sql script resolves 10 major operational questions. Here are a few foundational examples:
-
-1. Retrieve all successful bookings
-SQL
+├── Images/
+│ └── Dashboard Screenshots
+│
+└── README.md
 
 
-CREATE VIEW Successful_Bookings AS
-SELECT * 
-FROM bookings 
-WHERE Booking_Status = 'Success';
-2. Find the average ride distance for each vehicle type
-SQL
+---
 
+## 📊 Key Performance Indicators (KPIs)
 
-CREATE VIEW Avg_Distance_Per_Vehicle AS
-SELECT Vehicle_Type, AVG(Ride_Distance) AS avg_distance 
-FROM bookings 
-GROUP BY Vehicle_Type;
-3. Identify the Top 5 customers by total booking value
-SQL
+- Total Bookings
+- Successful Rides
+- Cancelled Rides
+- Booking Success Rate
+- Total Revenue
+- Average Ride Distance
+- Customer Ratings
+- Driver Ratings
 
+---
 
-SELECT Customer_ID, SUM(Booking_Value) AS total_spent 
-FROM bookings 
-WHERE Booking_Status = 'Success'
-GROUP BY Customer_ID 
-ORDER BY total_spent DESC 
-LIMIT 5;
-4. Analyze main reasons for driver-led cancellations
-SQL
+## 🔍 Analysis Performed
 
+### 1. Booking Analysis
+- Total rides booked
+- Daily booking trends
+- Peak booking periods
 
-SELECT Cancelled_Rides_by_Driver, COUNT(*) AS total_cancellations
+### 2. Revenue Analysis
+- Total booking value
+- Revenue by vehicle type
+- Revenue trends over time
+
+### 3. Cancellation Analysis
+- Customer cancellations
+- Driver cancellations
+- Cancellation reasons
+
+### 4. Customer Analysis
+- Top customers by booking count
+- Customer ratings
+- Booking frequency
+
+### 5. Vehicle Performance
+- Most booked vehicle types
+- Average ride distance
+- Vehicle-wise revenue
+
+### 6. Payment Analysis
+- UPI payments
+- Cash payments
+- Card transactions
+- Payment method trends
+
+---
+
+## 📈 Dashboard Features
+
+The Power BI dashboard provides:
+
+- Interactive filters
+- Revenue tracking
+- Booking status visualization
+- Vehicle performance comparison
+- Customer behavior analysis
+- Cancellation insights
+- KPI cards for quick monitoring
+
+---
+
+## 🗄️ Sample SQL Queries
+
+### Successful Bookings
+
+```sql
+SELECT *
 FROM bookings
-WHERE Booking_Status = 'Cancelled by Driver'
-GROUP BY Cancelled_Rides_by_Driver
-ORDER BY total_cancellations DESC;
-🎛️ Dashboard Insights & Visualizations
-The interactive dashboards break down the data into 4 major operational dimensions:
+WHERE Booking_Status = 'Success';
+Top 5 Customers
+SELECT Customer_ID,
+       COUNT(Booking_ID) AS Total_Rides
+FROM bookings
+GROUP BY Customer_ID
+ORDER BY Total_Rides DESC
+LIMIT 5;
+Average Ride Distance by Vehicle Type
+SELECT Vehicle_Type,
+       AVG(Ride_Distance) AS Avg_Distance
+FROM bookings
+GROUP BY Vehicle_Type;
+Total Revenue
+SELECT SUM(Booking_Value) AS Total_Revenue
+FROM bookings
+WHERE Booking_Status = 'Success';
+📷 Dashboard Preview
+Overview Dashboard
 
-Overall Performance: Tracking total bookings, success rate vs. cancellation split, and localized demand metrics over time.
+(Add Screenshot Here)
 
-Vehicle Performance: Evaluating which segments (e.g., Prime Sedan vs. Ola Auto) drive the highest margins and average distances.
+Revenue Dashboard
 
-Revenue Analysis: Deep dive into payment processing metrics (UPI, Cash, Credit Card) and tracking the lifetime value (LTV) of top customer cohorts.
+(Add Screenshot Here)
 
-Cancellation Breakdown: Granular charts isolating precisely why drivers (e.g., "Personal/Car issues") and customers (e.g., "Change of plans") abandon rides.
+Cancellation Dashboard
 
-🚀 How to Replicate This Project
-Step 1: Database Setup
-Open MySQL Workbench and connect to your instance.
+(Add Screenshot Here)
 
-Execute the SQL/database_schema.sql file to build your structure.
+Vehicle Analysis Dashboard
 
-Import Data/raw_bookings.csv via the MySQL Table Data Import Wizard.
+(Add Screenshot Here)
 
-Step 2: Extract Insights
-Run SQL/business_queries.sql to generate optimization metrics and create necessary relational views.
+💡 Key Insights
+Successful rides contribute the majority of revenue.
+Certain vehicle categories generate higher booking values.
+Driver cancellations have a significant impact on ride completion rates.
+Digital payment methods are preferred by most customers.
+Peak demand occurs during specific hours and weekends.
+🚀 Business Recommendations
+Reduce cancellation rates through driver incentives.
+Improve availability during peak hours.
+Promote high-performing vehicle categories.
+Encourage digital payments through rewards.
+Improve customer retention programs.
+📥 How to Run
+Clone Repository
+git clone https://github.com/DakshRana1/Ola-Ride-Bookings-Analysis.git
+Open SQL Files
 
-Step 3: BI Dashboard Exploration
-Launch Tableau Desktop or Power BI Desktop.
+Run the SQL scripts in:
 
-Open the file located in the Dashboards/ directory.
+MySQL Workbench
+PostgreSQL
+SQL Server
+Open Power BI Dashboard
+Dashboard/Ola Dashboard.pbix
+👨‍💻 Author
 
-Re-link the data source to your local SQL views or the clean xlsx sheet to explore custom metrics interactively.
+Daksh Rana
 
-🧑‍💻 Author
-Daksh Rana - GitHub Profile
+GitHub: https://github.com/DakshRana1
 
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+⭐ Support
+
+If you found this project useful, please give it a ⭐ on GitHub.
